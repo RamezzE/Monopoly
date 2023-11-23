@@ -49,7 +49,6 @@ public class PlayScreen {
     
     public Label playerName, balance, propertiesOwnedText;
     
-    
     private Scene scene;
             
     public Player currentPlayer;

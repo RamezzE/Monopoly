@@ -45,7 +45,7 @@ public class Game {
     private static final String defaultBoardFile = "assets\\files\\defaultBoardData.ser";
     private static final String playerDataFile = "assets\\files\\playerData.ser";
     private static final String lastGameFile = "assets\\files\\lastBoardData.ser";
-
+    
     //initializing other variables
     public static ArrayList<Tile> Board = new ArrayList();
     public static ArrayList<Player> player = new ArrayList();

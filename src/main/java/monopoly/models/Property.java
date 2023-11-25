@@ -1,18 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package monopoly;
+package monopoly.models;
 
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  *
  * @author ramez
  */
 
-public class Property extends Tile implements Serializable {
+public class Property extends Tile {
     
     private int rent;
     private int baseRent;
@@ -61,29 +56,12 @@ public class Property extends Tile implements Serializable {
         this.type = "property";
     }
     
-    public static void linkProperties(ArrayList<Tile> Board, int T1, int T2) {
-        
-        //link related sets with each other
-        
-        ((Property)Board.get(T1)).setFullSet(T2);
-        ((Property)Board.get(T2)).setFullSet(T1);
-    }
-    
-    public static void linkProperties(ArrayList<Tile> Board, int T1,int T2, int T3) {
-        
-        //link related sets with each other
-        
-        ((Property)Board.get(T1)).setFullSet(T2,T3);
-        ((Property)Board.get(T2)).setFullSet(T1,T3);
-        ((Property)Board.get(T3)).setFullSet(T1,T2);
-    }
-    
-    private void setFullSet(int T1) {
+    public void setFullSet(int T1) {
         fullSet[0] = location;
         fullSet[1] = T1;
     }
     
-    private void setFullSet(int T1,int T2) {
+    public void setFullSet(int T1,int T2) {
         fullSet[0] = location;
         fullSet[1] = T1;
         fullSet[2] = T2;

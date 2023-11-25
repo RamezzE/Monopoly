@@ -1,8 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package monopoly;
+
+import monopoly.models.Player;
+import monopoly.models.Tile;
+import monopoly.models.Property;
+import monopoly.models.OtherTiles;
+
+import monopoly.views.EnteringPlayerData;
+import monopoly.views.MenuScreen;
+import monopoly.views.NewGameScreen;
+import monopoly.views.PlayScreen;
+import monopoly.views.WelcomeScreen;
+
+import monopoly.controllers.PropertyController;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,7 +68,6 @@ public class Game {
         initializeVariables();
         initializeScreens();
         reloadPlayerData();
-
     }
 
     public void initializeVariables() {
@@ -183,21 +191,21 @@ public class Game {
         Board.add(39, new Property(39, "Boardwalk", "Dark blue", 400, 50, 200, 600, 1400, 1700, 2000, 200, 200, 2));
 
         //linking sets to each other
-        Property.linkProperties(Board, 1, 3);
+        PropertyController.linkProperties(Board, 1, 3);
 
-        Property.linkProperties(Board, 6, 8, 9);
+        PropertyController.linkProperties(Board, 6, 8, 9);
 
-        Property.linkProperties(Board, 11, 13, 14);
+        PropertyController.linkProperties(Board, 11, 13, 14);
 
-        Property.linkProperties(Board, 16, 18, 19);
+        PropertyController.linkProperties(Board, 16, 18, 19);
 
-        Property.linkProperties(Board, 21, 23, 24);
+        PropertyController.linkProperties(Board, 21, 23, 24);
 
-        Property.linkProperties(Board, 26, 27, 29);
+        PropertyController.linkProperties(Board, 26, 27, 29);
 
-        Property.linkProperties(Board, 31, 32, 34);
+        PropertyController.linkProperties(Board, 31, 32, 34);
 
-        Property.linkProperties(Board, 37, 39);
+        PropertyController.linkProperties(Board, 37, 39);
 
         try {
             FileOutputStream writeData = new FileOutputStream(defaultBoardFile);

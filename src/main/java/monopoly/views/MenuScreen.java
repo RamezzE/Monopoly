@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package monopoly;
+package monopoly.views;
+
+import monopoly.Game;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -65,11 +63,9 @@ public class MenuScreen {
         menu.setAlignment(Pos.CENTER);
         menu.add(menuBox,0,0);
         
-        
         menu.setStyle("-fx-background-color: #002230;"); 
         
         scene = new Scene(menu,Game.screenWidth,Game.screenHeight);
-            //
             
         //end of menu  
         
@@ -80,19 +76,15 @@ public class MenuScreen {
         alert.setHeaderText(null);
         
         newGameB.setOnAction((ActionEvent event) -> {
-            
             Game.primaryStage.setOnCloseRequest( e -> {
                 Game.saveGame();
                 Game.primaryStage.close();
             });
             Game.primaryStage.setScene(Game.newGameScreen.getScene());
-            
         });
         
         contGameB.setOnAction((ActionEvent event) -> {
-
             Game.playScreen.loadGame();            
-            
         });
 
     }

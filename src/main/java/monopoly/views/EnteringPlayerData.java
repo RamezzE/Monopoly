@@ -1,8 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package monopoly;
+package monopoly.views;
+
+import monopoly.Game;
+import monopoly.Queue;
+import monopoly.models.Player;
+
+import monopoly.controllers.PlayerController;
+
+import static monopoly.views.PlayScreen.playerQueue;
+import static monopoly.views.PlayScreen.playersCount;
 
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -15,8 +20,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import static monopoly.PlayScreen.playerQueue;
-import static monopoly.PlayScreen.playersCount;
 
 /**
  *
@@ -37,17 +40,16 @@ public class EnteringPlayerData {
     
     public EnteringPlayerData(int playerNum) {
         Game.reloadPlayerData();
-        Game.playScreen.playersCount = playerNum;
+        PlayScreen.playersCount = playerNum;
         initialize();
-        
     }
     
     public void initialize() {
         // Entering player data screen
         
-        Names = new Label[Game.playScreen.playersCount];
-        TNames = new TextField[Game.playScreen.playersCount];
-        HNames = new HBox[Game.playScreen.playersCount];
+        Names = new Label[PlayScreen.playersCount];
+        TNames = new TextField[PlayScreen.playersCount];
+        HNames = new HBox[PlayScreen.playersCount];
         
         vNames = new VBox(10);
         
@@ -57,7 +59,7 @@ public class EnteringPlayerData {
         logo.setTranslateY(-100);
         
         
-        for(int i=0;i<Game.playScreen.playersCount;i++) {
+        for(int i=0;i<PlayScreen.playersCount;i++) {
             
                 Names[i] = new Label("Player "+(i+1)+" : ");
                 
@@ -94,17 +96,16 @@ public class EnteringPlayerData {
         
         //end of screen
         
-        
         Game.go[1].setOnAction((ActionEvent event) -> {
             
             
-            String [] arr = new String[Game.playScreen.playersCount];
+            String [] arr = new String[PlayScreen.playersCount];
             Alert alert = new Alert((Alert.AlertType.ERROR));
             
             
-            for (int i = 0;i<Game.playScreen.playersCount;i++)  {
+            for (int i = 0;i<PlayScreen.playersCount;i++)  {
                 if (TNames[i].getText().length() == 0) {
-                    alert.setContentText("Please enter all " + Game.playScreen.playersCount + " names");
+                    alert.setContentText("Please enter all " + PlayScreen.playersCount + " names");
                     alert.show();
                     return;
                 }
@@ -114,8 +115,8 @@ public class EnteringPlayerData {
             }
             
             
-            for (int i = 0;i<Game.playScreen.playersCount;i++) {
-                for (int j = 0;j<Game.playScreen.playersCount;j++) {
+            for (int i = 0;i<PlayScreen.playersCount;i++) {
+                for (int j = 0;j<PlayScreen.playersCount;j++) {
                     if (i!=j) {
                         if (arr[j].equals(arr[i])) {
                             //duplicate name
@@ -129,11 +130,11 @@ public class EnteringPlayerData {
             
             playerList = new ArrayList<>();
             
-            for (int i = 0;i<Game.playScreen.playersCount;i++) {
+            for (int i = 0;i<PlayScreen.playersCount;i++) {
                 
                 String name = TNames[i].getText().toLowerCase();
                 
-                int index = Player.isNewPlayer(Game.player, name); //returns Player's index or -1 if new Player
+                int index = PlayerController.isNewPlayer(Game.player, name); //returns Player's index or -1 if new Player
                 
                 if (index < 0) {
                     
@@ -150,12 +151,8 @@ public class EnteringPlayerData {
                     System.out.println("Welcome back");
                     Game.player.get(index).startNewGame();
                     playerList.add(index);
-                }
-                
-                
-                
+                }  
             }   
-            
             
             Game.primaryStage.setScene(Game.playScreen.getScene());
             Game.primaryStage.setFullScreen(true);
@@ -165,13 +162,8 @@ public class EnteringPlayerData {
             Game.playScreen.rollSum = new int[playersCount][2]; 
             
             Game.playScreen.figurePlayerOrder();
-           
-            
         });
-        
     }
-    
-    
     
     public Scene getScene() {
         return scene;

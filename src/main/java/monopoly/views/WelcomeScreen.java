@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package monopoly;
+package monopoly.views;
+
+import monopoly.Game;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -14,13 +16,12 @@ import javafx.scene.layout.StackPane;
  *
  * @author ramez
  */
+
 public class WelcomeScreen {
-    
     
     private Button startButton;
     private StackPane pane;
     private ImageView background;
-        
     
     Scene scene;
     
@@ -31,7 +32,7 @@ public class WelcomeScreen {
     public void initialize() {
        // screen 1
         
-            //startButton
+        //startButton
         startButton = new Button("Play");
         
         //startButton.setStyle("-fx-background-color: transparent;-fx-cursor: hand; -fx-border-thickness:3px;-fx-border-color:black;-fx-text-fill: #ffffff");
@@ -51,10 +52,7 @@ public class WelcomeScreen {
         background = new ImageView(Game.boardImage);
         
         pane = new StackPane();
-        pane.getChildren().addAll(background, startButton);
-        
-        scene = new Scene(pane,Game.screenWidth,Game.screenHeight);
-        // end of screen1 
+        pane.getChildren().addAll(background, startButton); 
     }
     
     public Scene getScene() {

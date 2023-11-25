@@ -1,8 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package monopoly;
+package monopoly.views;
+
+import monopoly.Game;
+import monopoly.Queue;
+
+import monopoly.models.Player;
+import monopoly.models.Property;
+
+import monopoly.controllers.PlayerController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -272,14 +276,14 @@ public class PlayScreen {
                     Game.back[3].setDisable(false);
 
         
-        playerName.setText(Game.player.get(Game.enterDataScreen.playerList.get(0)).getName());
-        balance.setText(Integer.toString(Game.player.get(Game.enterDataScreen.playerList.get(0)).getBalance()));
+        playerName.setText(Game.player.get(EnteringPlayerData.playerList.get(0)).getName());
+        balance.setText(Integer.toString(Game.player.get(EnteringPlayerData.playerList.get(0)).getBalance()));
         
         
         rollBtn.setOnAction((ActionEvent event) -> {
             
-            roll1 = Player.roll();
-            roll2 = Player.roll();
+            roll1 = PlayerController.roll();
+            roll2 = PlayerController.roll();
             
             addInfo(playerName.getText() + " rolled " + roll1 + " & " + roll2);
             
@@ -301,7 +305,7 @@ public class PlayScreen {
             rollBtn.setOpacity(0);
             
             rollSum[i][0] = roll1+roll2;
-            rollSum[i][1] = Game.player.get(Game.enterDataScreen.playerList.get(i)).getID();
+            rollSum[i][1] = Game.player.get(EnteringPlayerData.playerList.get(i)).getID();
             
             endTurnBtn.setDefaultButton(true);
             
@@ -310,7 +314,7 @@ public class PlayScreen {
         endTurnBtn.setOnAction((ActionEvent event) -> {
             
             try {
-                currentPlayer = Game.player.get(Game.enterDataScreen.playerList.get(i+1)); 
+                currentPlayer = Game.player.get(EnteringPlayerData.playerList.get(i+1)); 
                 playerName.setText(currentPlayer.getName());
 
                 balance.setText(Integer.toString(currentPlayer.getBalance()));
@@ -381,7 +385,7 @@ public class PlayScreen {
             try {
                 ImageView playerToken = tokens[Game.player.get(playerQueue.front()).getTokenIndex()];
                 pane.getChildren().add(playerToken);
-                Game.player.get(playerQueue.front()).setTokenPosition(playerToken);
+                PlayerController.setTokenPosition(Game.player.get(playerQueue.front()), playerToken);
 
                 playerQueue.cycle();
             }
@@ -406,8 +410,8 @@ public class PlayScreen {
         rollBtn.setOnAction((ActionEvent event) -> {
             Game.back[3].setDisable(true);
 
-            roll1 = Player.roll();
-            roll2 = Player.roll();
+            roll1 = PlayerController.roll();
+            roll2 = PlayerController.roll();
             
             addInfo(playerName.getText() + " rolled " + roll1 + " & " + roll2);
             
@@ -433,7 +437,7 @@ public class PlayScreen {
                 if (roll1 == roll2) {
                     if (++currentPlayer.doubleRollsCount == 3) {
                         currentPlayer.doubleRollsCount = 0;
-                        currentPlayer.goToJail(tokens[currentPlayer.getTokenIndex()]);
+                        PlayerController.goToJail(currentPlayer, tokens[currentPlayer.getTokenIndex()]);
                         addInfo(currentPlayer.getName() + " rolled doubles 3 times in a row so they're GOING TO JAIL");
                     }
                     else {
@@ -446,10 +450,7 @@ public class PlayScreen {
                 }
                 else currentPlayer.doubleRollsCount = 0;
                 
-                ImageView playerToken = tokens[currentPlayer.getTokenIndex()];
-                
-                long start, end;
-                
+                ImageView playerToken = tokens[currentPlayer.getTokenIndex()];                
                 
 //                for (int i = 0;i<roll1+roll2;i++) {
 //                    start = System.currentTimeMillis();
@@ -459,7 +460,7 @@ public class PlayScreen {
 //                        end = System.currentTimeMillis();
 //                    }
 //                    System.out.println("0.5 second passed");
-                    currentPlayer.move(playerToken, roll1+roll2);
+                    PlayerController.move(currentPlayer, playerToken, roll1+roll2);
 //                    Game.primaryStage.show();
 //                }
                   
@@ -514,7 +515,7 @@ public class PlayScreen {
                         
                     case "go to jail":
                         addInfo(currentPlayer.getName() + " IS GOING TO JAIL");
-                        currentPlayer.goToJail(tokens[currentPlayer.getTokenIndex()]);
+                        PlayerController.goToJail(currentPlayer, tokens[currentPlayer.getTokenIndex()]);
                         break;
                     case "jail":
                         addInfo(playerName.getText() + " is just visiting Jail");
@@ -529,14 +530,14 @@ public class PlayScreen {
                 //player in jail action:
                 if (roll1 == roll2) {
                     addInfo("DOUBLE ROLL, SO " + currentPlayer.getName() + " IS OUT OF JAIL");
-                    currentPlayer.getOutOfJail(tokens[currentPlayer.getTokenIndex()], roll1+roll2);
+                    PlayerController.getOutOfJail(currentPlayer, tokens[currentPlayer.getTokenIndex()], roll1+roll2);
                     return;
                 }
                 else if (currentPlayer.roundsInJail < 3) {
                     buyPropertyBtn.setText("Pay 50 to break free");
                     buyPropertyBtn.setDisable(false);
                     addInfo(playerName.getText() + " IS IMPRISONED IN JAIL");
-
+                    
                     currentPlayer.roundsInJail++;
                     addInfo(currentPlayer.getName() + " rounds in Jail: " + currentPlayer.roundsInJail);
                 }
@@ -549,7 +550,7 @@ public class PlayScreen {
                     }
                     else {
                         addInfo(currentPlayer.getName() + " PAID 50 AND GOT OUT OF JAIL");
-                        currentPlayer.getOutOfJail(tokens[currentPlayer.getTokenIndex()], roll1+roll2);
+                        PlayerController.getOutOfJail(currentPlayer, tokens[currentPlayer.getTokenIndex()], roll1+roll2);
 
                     }
                 }    
@@ -657,7 +658,7 @@ public class PlayScreen {
                 }
                 else {
                     addInfo(currentPlayer.getName() + " PAID 50 AND GOT OUT OF JAIL");
-                    currentPlayer.getOutOfJail(tokens[currentPlayer.getTokenIndex()], roll1+roll2);
+                    PlayerController.getOutOfJail(currentPlayer, tokens[currentPlayer.getTokenIndex()], roll1+roll2);
                     buyPropertyBtn.setText("Buy Property");
                     buyPropertyBtn.setDisable(true);
                 }

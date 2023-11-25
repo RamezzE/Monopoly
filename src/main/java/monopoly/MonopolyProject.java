@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
- */
 package monopoly;
+
+import monopoly.controllers.GameController;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -13,12 +11,12 @@ import javafx.stage.Stage;
  */
 public class MonopolyProject extends Application {
     
-    private Game myGame;
+    private GameController myGameController;
     
     @Override
     public void start(Stage primaryStage) {
-        myGame = new Game();
-        myGame.startProgram();
+        myGameController = new GameController();
+        myGameController.start();
     }
 
     /**

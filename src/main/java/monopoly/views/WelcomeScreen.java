@@ -1,14 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package monopoly.views;
 
-import monopoly.Game;
+import monopoly.controllers.GameController;
+
+import java.util.Map;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
@@ -22,10 +21,13 @@ public class WelcomeScreen {
     private Button startButton;
     private StackPane pane;
     private ImageView background;
+
+    private GameController myGameController;
     
     Scene scene;
     
-    public WelcomeScreen() {
+    public WelcomeScreen(GameController Game, GameView GameView) {
+        myGameController = Game;
         initialize();
     }
     
@@ -44,15 +46,17 @@ public class WelcomeScreen {
         startButton.setTranslateY(-176);
         
         startButton.setOnAction((ActionEvent event) -> {
-            Game.primaryStage.setScene(Game.menuScreen.getScene());
+            myGameController.changeScreen("MenuScreen");
         });
         
         // end of startButton
             
-        background = new ImageView(Game.boardImage);
+        background = new ImageView(new Image("file:assets\\imgs\\monopoly.jpg"));
         
         pane = new StackPane();
         pane.getChildren().addAll(background, startButton); 
+
+        scene = new Scene(pane, 1280, 720);
     }
     
     public Scene getScene() {

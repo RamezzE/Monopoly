@@ -12,11 +12,22 @@ public class PlayerController {
         return (int) (Math.random() * 6 + 1);
     }
 
-    public static int isNewPlayer(ArrayList<Player> player, String name) {
+    public static void addPlayer(ArrayList<Player> players, String playerName) {
+        
+        int playerID = isNewPlayer(players, playerName);
+        if (playerID == -1) {
+            players.add(new Player(playerName, players.size()));
+            playerID = players.size() - 1;
+        }
+
+        players.get(playerID).startNewGame();
+    }
+
+    private static int isNewPlayer(ArrayList<Player> players, String name) {
         // check if this player is a new player or not
 
-        for (int i = 0; i < player.size(); i++) {
-            if (player.get(i).getName().equals(name)) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getName().equals(name)) {
                 return i;
             }
         }
